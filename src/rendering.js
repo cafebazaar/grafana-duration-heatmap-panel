@@ -48,9 +48,9 @@ export default function link(scope, elem, attrs, ctrl) {
     var elem_size = {width: elem.width(), height: elem.height()};
     var date_domain = {min: data.min_date, max: data.max_date};
     var bin_domain = {min: 0, max: data.all_buckets.length};
-    var frq_domain = {min:ctrl.min_frq, max: ctrl.max_frq};
+    var frq_domain = {min:ctrl.panel.min_frq, max: ctrl.panel.max_frq};
 
-    heatmap(data.series_array, ctrl.num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, data.all_buckets, ctrl.number_of_legend);
+    heatmap(data.series_array, ctrl.panel.num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, data.all_buckets, ctrl.panel.number_of_legend);
   }
 
   function render() {

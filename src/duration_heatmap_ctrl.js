@@ -1,5 +1,6 @@
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
 import TimeSeries from 'app/core/time_series';
+import _ from 'lodash';
 
 import rendering from './rendering';
 
@@ -7,12 +8,16 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
   constructor($scope, $injector) {
     super($scope, $injector);
 
-    // These are panel's configurations, in future versions these will be controllable.
-    this.num_of_slices = 140;
-    this.number_of_legend = 10 ;
-    this.min_frq = 0;
-    this.max_frq = 3000;
-    this.POSITIVE_INFINITY = 100000000;
+    // Panel Initial configurations
+    var panelDefaults = {
+      num_of_slices: 140,
+      number_of_legend: 10,
+      min_frq: 0,
+      max_frq: 3000,
+      POSITIVE_INFINITY: 100000000
+    }
+
+    _.defaults(this.panel, panelDefaults);
 
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
@@ -45,7 +50,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
   parseSeries(series) {
     let min_unixtime = Math.min.apply(Math, series.map(s => s.min));
     let max_unixtime = Math.min.apply(Math, series.map(s => s.max));
-    let slice_length = (max_unixtime-min_unixtime) / this.num_of_slices;
+    let slice_length = (max_unixtime-min_unixtime) / this.panel.num_of_slices;
 
     var all_buckets = [];
 
@@ -119,7 +124,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     // NaN (which is a result of converting "Inf" to int) will break sorting process, wo we'll replace it with a huge number.
     // We can't use Number.POSITIVE_INFINITY because it will break sorting process too!
     if(isNaN(series.bucket)) {
-      series.bucket = this.POSITIVE_INFINITY;
+      series.bucket = this.panel.POSITIVE_INFINITY;
     }
 
     series.min = datapoints[0][1];
