@@ -53,4 +53,12 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
 
     // Add a call back function to hide tooltip_div when mouse goes out of our svg.
     svg.on("mouseout", () => tooltip_div.style("opacity", 0));
+
+    // Add X Axis
+    var xAxisFunc = d3.svg.axis().scale(x_scale).orient("bottom");
+    var xAxis = svg.append("g").attr("transform", "translate(0," + height + ")").call(xAxisFunc).attr("fill", "red");
+
+    // Add Y Axis
+    var yAxisFunc = d3.svg.axis().scale(y_scale).orient("left");
+    var yAxis = svg.append("g").call(yAxisFunc).attr("fill", "red");
 }
