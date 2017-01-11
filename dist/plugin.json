@@ -10,8 +10,12 @@
       "url": "https://cafebazaar.ir"
     },
     "keywords": ["heatmap", "panel"],
-    "version": "0.0.1",
-    "updated": "2017-01-03"
+    "screenshots": [
+      {"name": "HeatMap", "path": "src/img/duration-heatmap.png"},
+      {"name": "options", "path": "src/img/editor.png"}
+    ],
+    "version": "0.1.0",
+    "updated": "2017-01-11"
   },
 
   "dependencies": {

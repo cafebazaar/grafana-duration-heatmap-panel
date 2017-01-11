@@ -1,6 +1,6 @@
 {
   "name": "cafebazaar-duration-heatmap-panel",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "duration heat map panel for Grafana",
   "main": "src/module.js",
   "scripts": {
