@@ -11,7 +11,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     this.num_of_slices = 140;
     this.number_of_legend = 10 ;
     this.min_frq = 0;
-    this.max_frq = 1000;
+    this.max_frq = 3000;
     this.POSITIVE_INFINITY = 100000000;
 
     this.events.on('render', this.onRender.bind(this));
@@ -54,10 +54,11 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
         let value = element[0];
 
         if(key in reduced) {
-          reduced[key] += value;
+          reduced[key]["value"] += value;
+          reduced[key]["count"] += 1;
         }
         else {
-          reduced[key] = value;
+          reduced[key] = {value: value, count: 1};
         }
 
         return reduced;
@@ -81,7 +82,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
       let bucket_index = all_buckets.indexOf(bucket_obj.bucket);
 
       for(var key in bucket_obj.data) {
-        series_array.push({bin: bucket_index, date: new Date(parseFloat(key)), value: bucket_obj.data[key]});
+        series_array.push({bin: bucket_index, date: new Date(parseFloat(key)), value: bucket_obj.data[key]["value"]/bucket_obj.data[key]["count"]});
       }
     });
 
