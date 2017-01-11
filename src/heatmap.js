@@ -3,6 +3,14 @@ import './bower_components/d3/d3.js';
 
 export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, all_buckets, number_of_legend) {
 
+    function my_log(x) {
+        return Math.log(x);
+    }
+
+    function my_exp(x) {
+        return Math.exp(x);
+    }
+
     var legend_color = "red";
 
     var margin = {top: 20, right: 90, bottom: 50, left: 90};
@@ -29,7 +37,7 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
     // In getting log we added 1 to each frequency so we never encounter Log(0) situation
     var x_scale = d3.time.scale().range([0, width]).domain([date_domain.min, date_domain.max]);
     var y_scale = d3.scale.linear().range([height, 0]).domain([bin_domain.min, bin_domain.max]);
-    var z_scale = d3.scale.linear().range(['white', 'darkred']).domain([Math.log(frq_domain.min+1), Math.log(frq_domain.max+1)]);
+    var z_scale = d3.scale.linear().range(['white', 'darkred']).domain([my_log(frq_domain.min+1), my_log(frq_domain.max+1)]);
 
 
     // Define the div for the tooltip
@@ -48,7 +56,7 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
         .attr('y', d => y_scale(d.bin + yStep))
         .attr("height", rect_size)
         .attr("width", rect_size)
-        .style("fill", d => z_scale(Math.log(d.value+1)))
+        .style("fill", d => z_scale(my_log(d.value+1)))
         .on("mouseover", function(d) {		
             tooltip_div.transition()
                 .style("opacity", 1);
@@ -96,7 +104,7 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
           .attr("y", 10)
           .attr("dy", ".35em")
           .attr("fill", legend_color)
-          .text(d => String(Math.floor(Math.exp(d)+1)));
+          .text(d => String(Math.floor(my_exp(d)-1)));
 
     svg.append("text")
        .attr("class", "label")
