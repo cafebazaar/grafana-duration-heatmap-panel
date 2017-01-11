@@ -5,7 +5,7 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
 
     var legend_color = "red";
 
-    var margin = {top: 20, right: 90, bottom: 30, left: 50};
+    var margin = {top: 20, right: 90, bottom: 50, left: 90};
     var width = elem_size.width - margin.left - margin.right;
     var height = elem_size.height - margin.top - margin.bottom;
 
@@ -63,10 +63,21 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
     // Add X Axis
     var xAxisFunc = d3.svg.axis().scale(x_scale).orient("bottom");
     var xAxis = svg.append("g").attr("transform", "translate(0," + height + ")").call(xAxisFunc).attr("fill", legend_color);
+    xAxis.append("text")
+         .attr("x", width/2)
+         .attr("y", 40)
+         .attr("text-anchor", "end")
+         .text("Date");
 
     // Add Y Axis
     var yAxisFunc = d3.svg.axis().scale(y_scale).orient("left").tickFormat(t => all_buckets[t]);
     var yAxis = svg.append("g").call(yAxisFunc).attr("fill", legend_color);
+    yAxis.append("text")
+         .attr("x", -height/2)
+         .attr("y", -60)
+         .attr("dy", ".71em")
+         .attr("transform", "rotate(-90)")
+         .text("Duration");
 
     // Add a legend for the color values.
     var legend = svg.selectAll(".legend")
