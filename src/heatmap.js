@@ -3,6 +3,8 @@ import './bower_components/d3/d3.js';
 
 export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, all_buckets) {
 
+    var legend_color = "red";
+
     var margin = {top: 20, right: 90, bottom: 30, left: 50};
     var width = elem_size.width - margin.left - margin.right;
     var height = elem_size.height - margin.top - margin.bottom;
@@ -56,9 +58,36 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
 
     // Add X Axis
     var xAxisFunc = d3.svg.axis().scale(x_scale).orient("bottom");
-    var xAxis = svg.append("g").attr("transform", "translate(0," + height + ")").call(xAxisFunc).attr("fill", "red");
+    var xAxis = svg.append("g").attr("transform", "translate(0," + height + ")").call(xAxisFunc).attr("fill", legend_color);
 
     // Add Y Axis
     var yAxisFunc = d3.svg.axis().scale(y_scale).orient("left").tickFormat(t => all_buckets[t]);
-    var yAxis = svg.append("g").call(yAxisFunc).attr("fill", "red");
+    var yAxis = svg.append("g").call(yAxisFunc).attr("fill", legend_color);
+
+    // Add a legend for the color values.
+    var legend = svg.selectAll(".legend")
+                    .data(z_scale.ticks(6).reverse())
+                    .enter().append("g")
+                    .attr("class", "legend")
+                    .attr("transform", function(d, i) { return "translate(" + (width + rect_size) + "," + (rect_size + i * rect_size) + ")"; });
+
+    legend.append("rect")
+          .attr("width", rect_size)
+          .attr("height", rect_size)
+          .style("fill", z_scale);
+
+    legend.append("text")
+          .attr("x", rect_size + 6)
+          .attr("y", 10)
+          .attr("dy", ".35em")
+          .attr("fill", legend_color)
+          .text(d => String(Math.floor(Math.exp(d)+1)));
+
+    svg.append("text")
+       .attr("class", "label")
+       .attr("x", width + rect_size)
+       .attr("y", 5)
+       .attr("dy", ".35em")
+       .attr("fill", legend_color)
+       .text("Count");
 }
