@@ -1,0 +1,38 @@
+<div class="editor-row">
+    <div class="section gf-form-group">
+        <h5 class="section-heading">Heat Map</h5>
+		<div class="gf-form">
+			<span class="gf-form-label width-10">Number of Slices:</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.num_of_slices" ng-change="ctrl.render()">
+            <info-popover mode="right-absolute"> Indicates number of buckets in horizontal axes (Date) <br/> It's better if this number be more than number of datapoints.</info-popover>
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-10">Min Frequency:</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.min_frq" ng-change="ctrl.render()">
+            <info-popover mode="right-absolute"> Minimum Frequency in our data. <br/> Helps to better color code frequencies.</info-popover>
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-10">Max Frequency:</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.max_frq" ng-change="ctrl.render()">
+            <info-popover mode="right-absolute"> Maximum Frequency in our data. <br/> Helps to better color code frequencies.</info-popover>
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-10">Positive Infinity:</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.POSITIVE_INFINITY" ng-change="ctrl.render()">
+            <info-popover mode="right-absolute"> If you have _inf bucket in your histogram buckets, this number will be replaced with it. <br/> It's needless to say that this number should be hiegher than any other bucket value in your data.</info-popover>
+		</div>
+    </div>
+
+
+    <div class="section gf-form-group">
+        <h5 class="section-heading">Legend</h5>
+		<div class="gf-form">
+			<span class="gf-form-label width-20">Max number of legend elements:</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.number_of_legend" ng-change="ctrl.render()">
+            <info-popover mode="right-absolute"> Indicates maximum number of elements in legend. <br/> Actual number will be determined automatically based on frequency range of your data.</info-popover>
+		</div>
+    </div>
+</div>

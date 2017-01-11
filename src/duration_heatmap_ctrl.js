@@ -18,6 +18,12 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     this.events.on('data-received', this.onDataReceived.bind(this));
     this.events.on('data-error', this.onDataError.bind(this));
     this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
+    this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
+  }
+
+
+  onInitEditMode() {
+    this.addEditorTab('Options', 'public/plugins/cafebazaar-duration-heatmap-panel/editor.html', 2);
   }
 
   onDataError() {
