@@ -59,6 +59,6 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
     var xAxis = svg.append("g").attr("transform", "translate(0," + height + ")").call(xAxisFunc).attr("fill", "red");
 
     // Add Y Axis
-    var yAxisFunc = d3.svg.axis().scale(y_scale).orient("left");
+    var yAxisFunc = d3.svg.axis().scale(y_scale).orient("left").tickFormat(t => all_buckets[t]);
     var yAxis = svg.append("g").call(yAxisFunc).attr("fill", "red");
 }
