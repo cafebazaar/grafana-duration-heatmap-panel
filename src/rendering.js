@@ -50,7 +50,7 @@ export default function link(scope, elem, attrs, ctrl) {
     var bin_domain = {min: 0, max: data.all_buckets.length};
     var frq_domain = {min:ctrl.min_frq, max: ctrl.max_frq};
 
-    heatmap(data.series_array, ctrl.num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, data.all_buckets);
+    heatmap(data.series_array, ctrl.num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, data.all_buckets, ctrl.number_of_legend);
   }
 
   function render() {

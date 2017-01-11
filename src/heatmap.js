@@ -1,7 +1,7 @@
 import './bower_components/d3/d3.js';
 
 
-export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, all_buckets) {
+export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, date_domain, bin_domain, frq_domain, all_buckets, number_of_legend) {
 
     var legend_color = "red";
 
@@ -81,7 +81,7 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
 
     // Add a legend for the color values.
     var legend = svg.selectAll(".legend")
-                    .data(z_scale.ticks(6).reverse())
+                    .data(z_scale.ticks(number_of_legend).reverse())
                     .enter().append("g")
                     .attr("class", "legend")
                     .attr("transform", function(d, i) { return "translate(" + (width + rect_size) + "," + (rect_size + i * rect_size) + ")"; });

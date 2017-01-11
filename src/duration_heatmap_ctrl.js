@@ -9,6 +9,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
 
     // These are panel's configurations, in future versions these will be controllable.
     this.num_of_slices = 140;
+    this.number_of_legend = 10 ;
     this.min_frq = 0;
     this.max_frq = 1000;
     this.POSITIVE_INFINITY = 100000000;
