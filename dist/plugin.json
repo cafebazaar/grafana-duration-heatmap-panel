@@ -1,0 +1,21 @@
+{
+  "type": "panel",
+  "name": "Duration HeatMap",
+  "id": "cafebazaar-duration-heatmap-panel",
+
+  "info": {
+    "description": "duration heat map panel for Grafana",
+    "author": {
+      "name": "Cafebazaar Inc.",
+      "url": "https://cafebazaar.ir"
+    },
+    "keywords": ["heatmap", "panel"],
+    "version": "0.0.1",
+    "updated": "2017-01-03"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
+}

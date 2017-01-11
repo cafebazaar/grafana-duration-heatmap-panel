@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/module.js"],"names":["DurationHeatMapCtrl"],"mappings":";;;;;;;;AAAQA,yB,0BAAAA,mB;;;2BAGNA,mB","file":"module.js","sourcesContent":["import {DurationHeatMapCtrl} from './duration_heatmap_ctrl';\n\nexport {\n  DurationHeatMapCtrl as PanelCtrl\n};\n"]}
