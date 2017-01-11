@@ -9,10 +9,14 @@ export default function heatmap(data, num_of_slices, elem, svg_id, elem_size, da
     var width = elem_size.width - margin.left - margin.right;
     var height = elem_size.height - margin.top - margin.bottom;
 
+    var xStep_ms = Math.ceil((date_domain.max - date_domain.min)/num_of_slices);
     var yStep = 1;
 
     var vertical_domain_length = bin_domain.max-bin_domain.min;
     var rect_size = Math.min(width/num_of_slices, height/vertical_domain_length);
+
+    // Extend the x- to fit the last bucket
+    date_domain.max = new Date(date_domain.max.getTime() + xStep_ms);
 
     width = rect_size*num_of_slices;
     height = rect_size*vertical_domain_length;
