@@ -14,7 +14,9 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
       number_of_legend: 10,
       min_frq: 0,
       max_frq: 3000,
-      POSITIVE_INFINITY: 100000000
+      POSITIVE_INFINITY: 100000000,
+      max_bin: 1000,
+      min_bin: 0
     }
 
     this.intPanelConfigs = ["num_of_slices", "number_of_legend", "min_frq", "max_frq", "POSITIVE_INFINITY"];
@@ -53,6 +55,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
 
   onDataReceived(dataList) {
     this.series = dataList.map(this.seriesHandler.bind(this));
+    this.series = this.series.filter(d => d != null)
     this.data = this.parseSeries(this.series);
 
     this.render(this.data);
@@ -141,7 +144,14 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     series.min = datapoints[0][1];
     series.max = datapoints[datapoints.length - 1][1];
 
-    return series;
+    // Do not inculde bins larger than max bin and smaller than min bin
+    if((series.bucket <= this.panel.max_bin) && (series.bucket >= this.panel.min_bin)) {
+      return series;
+    }
+    else
+    {
+      return null;
+    }
   }
 
   link(scope, elem, attrs, ctrl) {
