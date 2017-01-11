@@ -17,7 +17,11 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
       POSITIVE_INFINITY: 100000000
     }
 
+    this.intPanelConfigs = ["num_of_slices", "number_of_legend", "min_frq", "max_frq", "POSITIVE_INFINITY"];
+
     _.defaults(this.panel, panelDefaults);
+
+    this.parseConfigs();
 
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
@@ -26,6 +30,12 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
   }
 
+  parseConfigs() {
+    for (var index in this.intPanelConfigs) {
+      var key = this.intPanelConfigs[index];
+      this.panel[key] = parseInt(this.panel[key]);
+    }
+  }
 
   onInitEditMode() {
     this.addEditorTab('Options', 'public/plugins/cafebazaar-duration-heatmap-panel/editor.html', 2);
@@ -37,6 +47,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
   }
 
   onRender() {
+    this.parseConfigs();
     this.data = this.parseSeries(this.series);
   }
 
