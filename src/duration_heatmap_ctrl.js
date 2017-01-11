@@ -19,7 +19,7 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
       min_bin: 0
     }
 
-    this.intPanelConfigs = ["num_of_slices", "number_of_legend", "min_frq", "max_frq", "POSITIVE_INFINITY"];
+    this.intPanelConfigs = ["num_of_slices", "number_of_legend", "min_frq", "max_frq", "POSITIVE_INFINITY", "max_bin", "min_bin"];
 
     _.defaults(this.panel, panelDefaults);
 
