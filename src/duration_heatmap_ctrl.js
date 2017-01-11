@@ -9,6 +9,9 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
 
     // These are panel's configurations, in future versions these will be controllable.
     this.num_of_slices = 140;
+    this.min_frq = 0;
+    this.max_frq = 1000;
+    this.POSITIVE_INFINITY = 100000000;
 
     this.events.on('render', this.onRender.bind(this));
     this.events.on('data-received', this.onDataReceived.bind(this));
@@ -37,7 +40,9 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     let max_unixtime = Math.min.apply(Math, series.map(s => s.max));
     let slice_length = (max_unixtime-min_unixtime) / this.num_of_slices;
 
-    return series.map(function(s) {
+    var all_buckets = [];
+
+    var series_data = series.map(function(s) {
       let bucketed_datapoints = s.datapoints.map(val => [val[0], (Math.floor((val[1]-min_unixtime)/slice_length)*slice_length)+min_unixtime]);
 
 
@@ -57,12 +62,36 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
         return reduced;
       });
 
+      all_buckets.push(parseInt(s.bucket));
+
       return {
         bucket: s.bucket,
         alias: s.alias,
         data: datum
       };
     });
+
+    // Sorting all_buckets so we can use it to index our buckets
+    all_buckets.sort((a, b) => parseInt(a)-parseInt(b));
+
+    // Flatning the structure, we want an array of (date_time_obj, bucket_index, value)
+    var series_array = [];
+    series_data.map(function(bucket_obj) {
+      let bucket_index = all_buckets.indexOf(bucket_obj.bucket);
+
+      for(var key in bucket_obj.data) {
+        series_array.push({bin: bucket_index, date: new Date(parseFloat(key)), value: bucket_obj.data[key]});
+      }
+    });
+
+    var data = {};
+    data.series_data = series_data;
+    data.min_date = new Date(min_unixtime);
+    data.max_date = new Date(max_unixtime);
+    data.all_buckets = all_buckets;
+    data.series_array = series_array;
+
+    return data
   }
 
   seriesHandler(seriesData) {
@@ -79,6 +108,12 @@ export class DurationHeatMapCtrl extends MetricsPanelCtrl {
     });
 
     series.bucket = parseInt(alias);
+    // NaN (which is a result of converting "Inf" to int) will break sorting process, wo we'll replace it with a huge number.
+    // We can't use Number.POSITIVE_INFINITY because it will break sorting process too!
+    if(isNaN(series.bucket)) {
+      series.bucket = this.POSITIVE_INFINITY;
+    }
+
     series.min = datapoints[0][1];
     series.max = datapoints[datapoints.length - 1][1];
 
