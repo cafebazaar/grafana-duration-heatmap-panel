@@ -2,15 +2,15 @@
 
 **Caution: This plugin is still unstable.**
 
-This plugin draws heatmap of duration timers for StatsD datasource.
+This plugin draws heatmap of timer durations for StatsD datasource.
 
-It highly depends on statsD way of storing histograms. (bin_# naming convention)
+It highly depends on statsD way of storing histograms. (`bin_#` naming convention)
 
-It's betta version and have some minor bugs, but in general it works fine. You're welcome to fix bugs and send pull requests.
+It's still on beta and has some minor bugs, but in general it works fine. You're welcome to fix bugs and send pull requests.
 
-In order to set statsD to save histogram data you should read exampleConfig.js file of your statsD and do the things listed under `histogram` part.
+In order to set statsD to save histogram data you should read `exampleConfig.js` file of your statsD and do the things listed under `histogram` part.
 
-Some portion of this plugin's code (including this README.md file) are based on [this](https://github.com/grafana/piechart-panel.git) open source grafana plugin.
+Some portion of this plugin's code (including this `README.md`) are based on [this](https://github.com/grafana/piechart-panel.git) open source grafana plugin.
 
 ## Instalation
 Use the new grafana-cli tool to install piechart-panel from the commandline:
@@ -32,7 +32,7 @@ It is also possible to clone this repo directly into your plugins directory.
 Afterwards restart grafana-server and the plugin should be automatically detected and used.
 
 ```
-git clone https://github.com/cafebazaar/duration-heatmap-panel.git
+git clone https://github.com/cafebazaar/grafana-duration-heatmap-panel.git
 sudo service grafana-server restart
 ```
 
